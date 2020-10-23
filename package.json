@@ -1,0 +1,33 @@
+{
+  "name": "communitydmcap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^4",
+    "@sap/hana-client": "^2.4.177",
+    "express": "^4",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.48",
+    "axios": "^0.20.0",
+    "form-data": "^3.0.0"
+  },
+  "devDependencies": {
+    "@sap/hdi-deploy": "3.11.11",
+    "sqlite3": "^5"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana"
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "welcomeFile": "/communitydmcapbooksapp/index.html",
+    "authenticationMethod": "route",
+    "routes": [
+        {
+            "source": "^/v2/catalog/(.*)$",
+            "authenticationType": "xsuaa",
+            "destination": "srv-api",
+            "csrfProtection": false
+        }
+    ]
+}

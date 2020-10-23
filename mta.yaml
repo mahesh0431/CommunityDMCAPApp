@@ -1,0 +1,112 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = communitydmcap
+## language=nodejs; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: communitydmcap
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ - name: communitydmcap-srv
+   type: nodejs
+   path: gen/srv
+   requires:
+    - name: communitydmcap-db
+    - name: sapcommunity_dm
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+ - name: communitydmcap-db-deployer
+   type: hdb
+   path: gen/db  
+   parameters:
+     buildpack: nodejs_buildpack
+   requires:
+    - name: communitydmcap-db
+ - name: communitydmcap-approuter
+   type: approuter.nodejs
+   path: approuter
+   requires:
+   - name: communitydmcap_html_repo_runtime
+   - name: communitydmcap_uaa
+   - name: sapcommunity_dm
+     group: destinations
+     properties:
+       name: sdibackend
+       url: "https://api-sdm-di.cfapps.sap.hana.ondemand.com"
+       forwardAuthToken: true  
+   - name: srv-api
+     group: destinations
+     properties:
+       name: srv-api
+       url: "~{srv-url}"
+       forwardAuthToken: true  
+   parameters:
+     disk-quota: 256M
+     memory: 256M
+ - name: communitydmcap_ui_deployer
+   type: com.sap.application.content
+   path: .
+   requires:
+   - name: communitydmcap_html_repo_host
+     parameters:
+       content-target: true
+   build-parameters:
+     build-result: resources
+     requires:
+     - artifacts:
+       - communitydmcapbooksapp-content.zip
+       name: communitydmcapbooksapp
+       target-path: resources/
+ - name: communitydmcapbooksapp
+   type: html5
+   path: app/booksapp
+   build-parameters:
+     builder: custom
+     commands:
+     - npm install
+     - npm run build
+     supported-platforms: []
+resources:
+- name: communitydmcap_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: communitydmcap_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host      
+- name: communitydmcap_uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: communitydmcap_uaa-xsuaa-service
+    service-plan: application  
+- name: sapcommunity_dm
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: sdm
+    service-plan: standard
+- name: communitydmcap-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hanatrial
+    service-plan: hdi-shared 
+  properties:
+    hdi-service-name: ${service-name}
+
+

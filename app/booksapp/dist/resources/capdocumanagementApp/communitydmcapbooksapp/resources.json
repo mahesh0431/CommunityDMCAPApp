@@ -1,0 +1,44 @@
+{
+    "resources": [
+        {
+            "name": "../../communitydmcapbooksapp/Component.js"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/manifest.json"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/ext/controller/attachment.controller.js"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/xs-app.json"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/manifest-bundle.zip"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "../../communitydmcapbooksapp/ext/controller/attachment-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../communitydmcapbooksapp/Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../sap-ui-version.json"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/ext/fragment/attachment.fragment.xml"
+        },
+        {
+            "name": "../../communitydmcapbooksapp/index.html"
+        }
+    ]
+}

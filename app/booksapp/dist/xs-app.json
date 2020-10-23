@@ -1,0 +1,22 @@
+{
+  "welcomeFile": "/communitydmcapbooksapp/index.html",
+  "authenticationMethod": "route",
+  "logout": {
+    "logoutEndpoint": "/do/logout"
+  },
+  "routes": [
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    },
+    {
+      "source": "^/comsapecmreuse.comsapecmreusedocumentTable/api/(.*)$",
+      "target": "$1",
+      "service": "com.sap.ecm.reuse",
+      "endpoint": "ecmservice",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}
